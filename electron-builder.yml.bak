@@ -1,0 +1,45 @@
+// electron-builder.yml - Configuração de build
+appId: com.gastosapp.desktop.v6
+productName: Gastos Mensais V6
+icon: build/icons/icon.png
+directories:
+  buildResources: build
+  output: dist
+
+files:
+  - main.js
+  - preload.js
+  - index.html
+  - login.html
+  - script.js
+  - style.css
+  - img/**/*
+  - node_modules/**/*
+
+linux:
+  target:
+    - AppImage
+    - deb
+  category: Office
+  icon: build/icons
+  executableName: gastos-mensais-v6
+  desktop:
+    Name: Gastos Mensais V6
+    Type: Application
+    Categories: Office;Finance;
+    MimeType: x-scheme-handler/gastos-mensais-v6;
+    StartupWMClass: gastos-mensais-v6
+    Icon: gastos-mensais-v6
+
+win:
+  target:
+    - nsis
+    - portable
+  certificateFile: null
+  certificatePassword: null
+
+mac:
+  target:
+    - dmg
+    - zip
+  category: public.app-category.productivity

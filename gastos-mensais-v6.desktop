@@ -1,0 +1,13 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=Gastos Mensais V6
+Comment=Aplicação para controle de gastos mensais
+Exec=env ELECTRON_NO_SANDBOX=1 "/home/matheus-mendes/Área de trabalho/PROJETOS COOKING/controlGastosAPPv6/dist/Gastos Mensais V6-6.0.0.AppImage" --no-sandbox %U
+Icon=/home/matheus-mendes/Área de trabalho/PROJETOS COOKING/controlGastosAPPv6/build/icons/icon.png
+Categories=Office;Finance;
+Terminal=false
+StartupNotify=true
+StartupWMClass=gastos-mensais-v6
+X-AppImage-Version=6.0.0
+SingleMainWindow=true

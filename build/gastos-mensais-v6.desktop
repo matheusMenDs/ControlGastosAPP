@@ -1,0 +1,9 @@
+[Desktop Entry]
+Name=Gastos Mensais V6
+Comment=Aplicação para controle de gastos mensais
+Exec=gastos-mensais-v6 %U
+Icon=gastos-mensais-v6
+Type=Application
+Categories=Office;Finance;
+Terminal=false
+StartupWMClass=gastos-mensais-v6

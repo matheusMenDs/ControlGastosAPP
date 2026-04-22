@@ -1,0 +1,82 @@
+{
+    "name": "control-gastos-app-v6",
+    "version": "6.0.0",
+    "description": "Aplicação de desktop para controle de gastos mensais",
+    "main": "main.js",
+    "homepage": "./",
+    "scripts": {
+        "start": "electron .",
+        "dev": "electron . --enable-logging",
+        "build": "electron-builder"
+    },
+    "keywords": [],
+    "author": {
+        "name": "Matheus Mendes",
+        "email": "matheus@example.com"
+    },
+    "license": "ISC",
+    "dependencies": {
+        "cors": "^2.8.5",
+        "express": "^4.18.2",
+        "fs-extra": "^11.1.1"
+    },
+    "devDependencies": {
+        "electron": "^39.2.5",
+        "electron-builder": "^26.0.12",
+        "nodemon": "^3.0.2"
+    },
+    "build": {
+        "appId": "com.gastosapp.desktop.v6",
+        "productName": "Gastos Mensais V6",
+        "icon": "build/icons/icon.png",
+        "directories": {
+            "buildResources": "build",
+            "output": "dist"
+        },
+        "files": [
+            "main.js",
+            "preload.js",
+            "index.html",
+            "login.html",
+            "script.js",
+            "style.css",
+            "img/**/*",
+            "node_modules/**/*"
+        ],
+        "linux": {
+            "icon": "build/icons",
+            "target": [
+                "AppImage",
+                "deb"
+            ],
+            "category": "Office",
+            "executableName": "gastos-mensais-v6"
+        },
+        "win": {
+            "icon": "img/coin.png",
+            "target": [
+                "nsis",
+                "portable"
+            ]
+        },
+        "mac": {
+            "icon": "img/coin.png",
+            "target": [
+                "dmg",
+                "zip"
+            ]
+        }
+    },
+    "config": {
+        "forge": {
+            "makers": [
+                {
+                    "name": "@electron-forge/maker-deb",
+                    "config": {
+                        "icon": "./img/icon.png"
+                    }
+                }
+            ]
+        }
+    }
+}

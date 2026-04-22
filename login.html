@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+
+    <!-- Fonte Bungee Spice -->
+    <link href="https://fonts.googleapis.com/css2?family=Bungee+Spice&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/png" href="img/coin.png">
+
+    <style>
+        :root {
+            --bg: #0b0f14;
+            --primary: #7c3aed;
+            --accent: #22d3ee;
+            --error: #ef4444;
+            --card: #151b24;
+            --stroke: #1f2630;
+            --text: #e6edf3;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Inter', system-ui, Arial;
+            background: radial-gradient(1200px 600px at 20% -10%, rgba(124, 58, 237, .25), transparent 55%),
+                radial-gradient(900px 500px at 90% 10%, rgba(34, 211, 238, .18), transparent 60%),
+                var(--bg);
+            color: var(--text);
+        }
+
+        .ratomine-login {
+            width: 180px;
+            height: 180px;
+            margin-bottom: 24px;
+            image-rendering: pixelated;
+        }
+
+        .login-title {
+            font-family: "Bungee Spice", sans-serif;
+            font-size: 48px;
+            margin-bottom: 25px;
+        }
+
+        .card {
+            background: var(--card);
+            border: 1px solid rgba(156, 163, 175, 0.35);
+            padding: 36px 32px 32px;
+            border-radius: 14px;
+            width: 440px;
+            box-shadow: 0 0 12px rgba(156, 163, 175, 0.12), 0 0 1px rgba(255,255,255,0.08), 0 10px 30px rgba(0, 0, 0, .35);
+            text-align: center;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px 12px;
+            margin-bottom: 14px;
+            border-radius: 10px;
+            background: #11161d;
+            border: 1.5px solid rgba(156, 163, 175, 0.35);
+            color: var(--text);
+            outline: none;
+            transition: border-color 0.18s, box-shadow 0.18s;
+            box-shadow: 0 0 6px rgba(156, 163, 175, 0.08), inset 0 0 0 1px rgba(255,255,255,0.03);
+        }
+
+        input:focus {
+            border-color: #f97316;
+            box-shadow: 0 0 0 2px rgba(249, 115, 22, 0.25);
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            border: 3px solid rgba(0, 0, 0, 0.9);
+            border-radius: 10px;
+            color: white;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 20px;
+            transition: transform 0.15s ease, box-shadow 0.15s ease, filter 0.15s ease;
+            box-shadow: 0 0 10px rgba(124, 58, 237, 0.3);
+        }
+
+        button:not(.fullscreen-login-btn):hover {
+            transform: translateY(-2px);
+            filter: brightness(1.12);
+            box-shadow: 0 4px 18px rgba(124, 58, 237, 0.45);
+        }
+
+        button:not(.fullscreen-login-btn):active {
+            transform: scale(0.97);
+            filter: brightness(0.95);
+            box-shadow: 0 1px 6px rgba(124, 58, 237, 0.3);
+        }
+
+        .fullscreen-login-btn {
+            position: fixed;
+            top: 18px;
+            right: 18px;
+            width: 36px;
+            height: 36px;
+            padding: 0;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 999px;
+            background: #11161d;
+            border: 1px solid var(--primary);
+            color: var(--text);
+            box-shadow: 0 10px 25px rgba(0,0,0,.55);
+            font-size: 18px;
+            line-height: 1;
+        }
+
+        .fullscreen-login-btn:hover {
+            filter: brightness(1.1);
+        }
+
+        /* Login error popup / toast */
+            /* Login error popup / toast - dark & simple */
+            #loginAlert {
+                position: fixed;
+                top: 18px;
+                left: 50%;
+                transform: translateX(-50%) translateY(-8px);
+                background: rgba(18,20,24,0.96);
+                color: var(--text);
+                padding: 10px 14px;
+                border-radius: 10px;
+                box-shadow: 0 8px 24px rgba(2,6,23,0.7);
+                display: flex;
+                gap: 12px;
+                align-items: center;
+                min-width: 300px;
+                max-width: calc(100% - 40px);
+                z-index: 1200;
+                opacity: 0;
+                pointer-events: none;
+                transition: transform 220ms cubic-bezier(.2,.9,.2,1), opacity 220ms ease;
+                border: 1px solid rgba(255,255,255,0.04);
+                font-weight: 500;
+            }
+            #loginAlert.show {
+                transform: translateX(-50%) translateY(0);
+                opacity: 1;
+                pointer-events: auto;
+            }
+            #loginAlert .alert-icon { color: var(--error); flex: 0 0 24px; margin-left: 2px; opacity: 1; }
+            /* allow the message container to shrink so the detail can use ellipsis */
+            #loginAlert .msg { flex: 1 1 auto; min-width: 0; display: flex; flex-direction: column; align-items: flex-start; margin-right: 8px; }
+            #loginAlert .title { font-size: 14px; font-weight: 700; line-height: 1; color: #ffffff; margin-bottom: 4px; text-transform: uppercase; }
+            /* Keep the detail on a single line; if too long show ... */
+            #loginAlert .detail {
+                font-size: 13px;
+                color: rgba(255,255,255,0.92);
+                margin: 0;
+                font-weight: 500;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
+                /* close button removed - no styles needed */
+        @media (prefers-reduced-motion: reduce) {
+            #loginAlert { transition: none !important; }
+        }
+    </style>
+    </style>
+</head>
+
+<body>
+
+    <button class="fullscreen-login-btn" onclick="toggleFullScreen()" title="Tela cheia (F11 / Esc)">⤢</button>
+
+    <img src="img/ratoMine.png" class="ratomine-login" alt="Ratomine">
+
+    <div class="card">
+        <h1 class="login-title">Login</h1>
+
+        <!-- Agora com form -->
+        <form onsubmit="login(); return false;">
+            <input id="user" placeholder="Usuário" required>
+            <input id="pass" type="password" placeholder="Senha" required>
+            <button type="submit">Entrar</button>
+        </form>
+    </div>
+
+    <!-- Pop-up de erro de login -->
+    <div id="loginAlert" role="alert" aria-hidden="true">
+        <svg class="alert-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M11.001 10h2v5h-2z" fill="currentColor" />
+            <path d="M11 16h2v2h-2z" fill="currentColor" />
+            <path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zM4 12c0-4.418 3.582-8 8-8s8 3.582 8 8-3.582 8-8 8-8-3.582-8-8z" fill="currentColor" />
+        </svg>
+        <div class="msg">
+            <div class="title">Erro</div>
+            <div class="detail"></div>
+        </div>
+    </div>
+
+    <script>
+        const USER = "admin";   // altere aqui
+        const PASS = "123456";   // altere aqui
+
+        function login() {
+            const u = document.getElementById('user').value;
+            const p = document.getElementById('pass').value;
+
+            if (u === USER && p === PASS) {
+                localStorage.setItem("logado", "1");
+                window.location.href = "index.html";
+            } else {
+                showLoginAlert("Usuário ou senha incorretos.");
+            }
+        }
+
+        function showLoginAlert(a, b, c) {
+            // compatibility: showLoginAlert(msg, duration)
+            // or showLoginAlert(title, detail, duration)
+            let title = 'Erro', detail = '', duration = 3800;
+            if (typeof b === 'number' && c === undefined) {
+                detail = a;
+                duration = b || 3800;
+            } else if (typeof b === 'string') {
+                title = a || 'Erro';
+                detail = b;
+                duration = typeof c === 'number' ? c : 3800;
+            } else {
+                detail = a;
+                duration = typeof b === 'number' ? b : 3800;
+            }
+
+            const el = document.getElementById('loginAlert');
+            if (!el) { alert(detail); return; }
+            const titleEl = el.querySelector('.title');
+            const detailEl = el.querySelector('.detail');
+            if (titleEl) titleEl.textContent = title;
+            if (detailEl) detailEl.textContent = detail;
+            el.setAttribute('aria-hidden', 'false');
+            el.classList.add('show');
+            if (el._timeout) clearTimeout(el._timeout);
+            el._timeout = setTimeout(() => hideLoginAlert(), duration);
+        }
+
+        function hideLoginAlert() {
+            const el = document.getElementById('loginAlert');
+            if (!el) return;
+            el.classList.remove('show');
+            el.setAttribute('aria-hidden', 'true');
+            if (el._timeout) { clearTimeout(el._timeout); el._timeout = null; }
+        }
+
+        function toggleFullScreen() {
+            if (window.electron && typeof window.electron.toggleFullScreen === "function") {
+                window.electron.toggleFullScreen();
+            } else {
+                const root = document.documentElement;
+                if (!document.fullscreenElement && root.requestFullscreen) {
+                    root.requestFullscreen().catch(() => { });
+                } else if (document.exitFullscreen) {
+                    document.exitFullscreen().catch(() => { });
+                }
+            }
+        }
+
+        document.addEventListener("keydown", (e) => {
+            if (e.key === "F11") {
+                e.preventDefault();
+                toggleFullScreen();
+            }
+            if (e.key === "Escape") {
+                if (window.electron && typeof window.electron.toggleFullScreen === "function") {
+                    e.preventDefault();
+                    window.electron.toggleFullScreen();
+                }
+            }
+        });
+    </script>
+
+</body>
+
+</html>
