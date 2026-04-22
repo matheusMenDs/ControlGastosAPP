@@ -7,3 +7,4 @@ Objetivo: Ajudar usuários a acompanhar gastos mensais, categorizar despesas e c
 Principais funcionalidades: interface de login; cadastro e edição de lançamentos; visualização de histórico mensal; exportação/armazenamento local (arquivo JSON); atalhos para execução empacotada (AppImage / desktop), Filtros por: data, criação, cores de cráficos, palavras chave, etc.
 Tecnologia / Estrutura: projeto leve com frontend em HTML/CSS/JS, backend em Node/Electron (arquivos como main.js, preload.js, server.js e package.json), dados armazenados localmente em data.json.
 Valores: Gastos aparece em vermelho e apresenta também uma categoria para LUCRO do mês na cor verde.
+(Desenvolvido para rodar no LINUX)
